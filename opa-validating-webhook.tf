@@ -23,7 +23,7 @@ resource "kubernetes_validating_webhook_configuration" "opa_validating_webhook" 
       resources    = ["*"]
     }
     client_config {
-      ca_bundle = tls_self_signed_cert.opa_server_cert_ca.cert_pem
+      ca_bundle = var.cluster_certificate_authority
       service {
         name      = kubernetes_service.opa.metadata.0.name
         namespace = kubernetes_namespace.opa_namespace.metadata.0.name
