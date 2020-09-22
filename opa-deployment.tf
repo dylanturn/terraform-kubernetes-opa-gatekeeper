@@ -51,6 +51,16 @@ resource "kubernetes_deployment" "opa" {
             "--replicate-cluster=v1/namespaces",
             "--replicate=extensions/v1beta1/ingresses"
           ]
+          volume_mount {
+            name = "opa-service-account-token"
+            mount_path = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+          }
+        }
+        volume {
+          name = "opa-service-account-token"
+          secret {
+            secret_name = kubernetes_secret.namespace_default_token.metadata.0.name
+          }
         }
         volume {
           name = "opa-server"

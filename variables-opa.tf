@@ -34,7 +34,7 @@ variable "image_pull_policy" {
   default     = "Always"
 }
 variable "cluster_certificate_authority" {
-  type = string
+  type        = string
   description = "The certificate authority data for the cluster this deployment is running in."
 }
 variable "labels" {

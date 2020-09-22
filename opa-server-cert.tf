@@ -29,10 +29,10 @@ resource "tls_private_key" "opa_server_cert_key" {
 }
 
 resource "tls_cert_request" "opa_server_cert_request" {
-  key_algorithm         = "RSA"
-  private_key_pem       = tls_private_key.opa_server_cert_key.private_key_pem
+  key_algorithm   = "RSA"
+  private_key_pem = tls_private_key.opa_server_cert_key.private_key_pem
   subject {
-    common_name  = "${kubernetes_service.opa.metadata.0.name}.${kubernetes_namespace.opa_namespace.metadata.0.name}.svc"
+    common_name         = "${kubernetes_service.opa.metadata.0.name}.${kubernetes_namespace.opa_namespace.metadata.0.name}.svc"
     organizational_unit = var.organizational_unit
     organization        = var.organization
     street_address      = var.street_address
@@ -50,7 +50,7 @@ resource "kubernetes_certificate_signing_request" "opa_server_signed_cert" {
   }
   auto_approve = true
   spec {
-    usages = ["client auth", "server auth"]
+    usages  = ["client auth", "server auth"]
     request = tls_cert_request.opa_server_cert_request.cert_request_pem
   }
 }
