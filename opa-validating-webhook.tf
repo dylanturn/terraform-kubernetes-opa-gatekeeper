@@ -5,6 +5,7 @@ resource "kubernetes_validating_webhook_configuration" "opa_validating_webhook" 
 
     }, local.resource_labels)
   }
+
   webhook {
     name = "validating-webhook.openpolicyagent.org"
     admission_review_versions = ["v1", "v1beta1"]
@@ -29,6 +30,7 @@ resource "kubernetes_validating_webhook_configuration" "opa_validating_webhook" 
       service {
         name      = kubernetes_service.opa.metadata.0.name
         namespace = kubernetes_namespace.opa_namespace.metadata.0.name
+
       }
     }
   }

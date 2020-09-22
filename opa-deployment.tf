@@ -44,6 +44,9 @@ resource "kubernetes_deployment" "opa" {
             mount_path = "/certs"
             read_only  = true
           }
+          port {
+            container_port = 443
+          }
         }
         container {
           name  = "kube-mgmt"
