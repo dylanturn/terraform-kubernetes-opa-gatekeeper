@@ -7,6 +7,8 @@ resource "kubernetes_validating_webhook_configuration" "opa_validating_webhook" 
   }
   webhook {
     name = "validating-webhook.openpolicyagent.org"
+    admission_review_versions = ["v1", "v1beta1"]
+    side_effects = "None"
     namespace_selector {
       match_expressions {
         key      = "openpolicyagent.org/webhook"
