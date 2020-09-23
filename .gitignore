@@ -1,5 +1,6 @@
 .idea
-
+.DS_Store
+lsp
 # Local .terraform directories
 **/.terraform/*
 

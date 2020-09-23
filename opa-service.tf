@@ -2,6 +2,9 @@ resource "kubernetes_service" "opa" {
   metadata {
     name      = "opa"
     namespace = kubernetes_namespace.opa_namespace.metadata.0.name
+    labels = merge({
+      # Other labels go here
+    }, local.resource_labels)
   }
   spec {
     selector = {

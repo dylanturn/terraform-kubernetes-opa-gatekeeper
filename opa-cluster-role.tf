@@ -2,7 +2,7 @@ resource "kubernetes_cluster_role_binding" "opa_viewer" {
   metadata {
     name = "opa-viewer"
     labels = merge({
-
+      # Other labels go here
     }, local.resource_labels)
   }
   role_ref {

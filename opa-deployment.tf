@@ -29,15 +29,18 @@ resource "kubernetes_deployment" "opa" {
           # deploying OPA in an insecure environment, be sure to configure
           # authentication and authorization on the daemon. See the Security page for
           # details: https://www.openpolicyagent.org/docs/security.html.
-          name  = "opa"
-          image = "${var.image_repository}/${var.opa_image_name}:${var.opa_version}"
+          name              = "opa"
+          image             = "${var.image_repository}/${var.opa_image_name}:${local.versions[var.opa_version]["opa"]}"
+          image_pull_policy = var.image_pull_policy
           args = [
             "run",
             "--server",
             "--tls-cert-file=/certs/tls.crt",
             "--tls-private-key-file=/certs/tls.key",
             "--addr=0.0.0.0:443",
-            "--addr=http://127.0.0.1:8181"
+            "--addr=http://127.0.0.1:8181",
+            "--log-format=json-pretty",
+            "--set=decision_logs.console=true"
           ]
           volume_mount {
             name       = "opa-server"
@@ -47,10 +50,29 @@ resource "kubernetes_deployment" "opa" {
           port {
             container_port = 443
           }
+          readiness_probe {
+            http_get {
+              path   = "/health?plugins&bundle"
+              scheme = "HTTPS"
+              port   = 443
+            }
+            initial_delay_seconds = 3
+            period_seconds        = 5
+          }
+          liveness_probe {
+            http_get {
+              path   = "/health"
+              scheme = "HTTPS"
+              port   = 443
+            }
+            initial_delay_seconds = 3
+            period_seconds        = 5
+          }
         }
         container {
-          name  = "kube-mgmt"
-          image = "${var.image_repository}/${var.kube_mgmt_image_name}:${var.kube_mgmt_version}"
+          name              = "kube-mgmt"
+          image             = "${var.image_repository}/${var.kube_mgmt_image_name}:${local.versions[var.opa_version]["kube-mgmt"]}"
+          image_pull_policy = var.image_pull_policy
           args = [
             "--replicate-cluster=v1/namespaces",
             "--replicate=extensions/v1beta1/ingresses"

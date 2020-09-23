@@ -1,17 +1,12 @@
+variable "opa_version" {
+  type        = string
+  description = "The version of OPA to pull"
+  default     = "0.23.2"
+}
 variable "namespace" {
   type        = string
   description = "The namespace this Open Policy Agent deployment will reside in."
   default     = "opa"
-}
-variable "opa_version" {
-  type        = string
-  description = "The version of OPA to pull"
-  default     = "0.11.0"
-}
-variable "kube_mgmt_version" {
-  type        = string
-  description = "The version of the `kube-mgmt` image to pull"
-  default     = "0.8"
 }
 variable "opa_image_name" {
   type        = string
