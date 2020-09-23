@@ -20,6 +20,7 @@ resource "kubernetes_deployment" "opa" {
         labels = merge({
           "app" : "opa"
         }, local.resource_labels)
+        annotations = {}
       }
       spec {
         automount_service_account_token = true
@@ -82,6 +83,7 @@ resource "kubernetes_deployment" "opa" {
           name = "opa-server"
           secret {
             secret_name = kubernetes_secret.opa_server_cert.metadata.0.name
+            optional = false
           }
         }
       }
