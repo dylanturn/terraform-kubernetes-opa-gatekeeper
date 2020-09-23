@@ -11,7 +11,7 @@ resource "kubernetes_config_map" "opa_default_system_main" {
   }
   lifecycle {
     ignore_changes = [
-      "metadata.annotations"
+      "metadata[0].annotations['openpolicyagent.org/policy-status']"
     ]
   }
 }
