@@ -4,7 +4,7 @@ resource "tls_private_key" "opa_server_cert_key" {
 }
 
 resource "tls_cert_request" "opa_server_cert_request" {
-  dns_names       = [kubernetes_service.opa.load_balancer_ingress[1], "${kubernetes_service.opa.metadata.0.name}.${kubernetes_namespace.opa_namespace.metadata.0.name}.svc"]
+  dns_names       = [kubernetes_service.opa.load_balancer_ingress, "${kubernetes_service.opa.metadata.0.name}.${kubernetes_namespace.opa_namespace.metadata.0.name}.svc"]
   key_algorithm   = "RSA"
   private_key_pem = tls_private_key.opa_server_cert_key.private_key_pem
   subject {
