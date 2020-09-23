@@ -6,11 +6,11 @@ resource "kubernetes_service" "opa" {
       # Other labels go here
     }, local.resource_labels)
     annotations = {
-      "service.beta.kubernetes.io/aws-load-balancer-internal": true
+      "service.beta.kubernetes.io/aws-load-balancer-internal" : true
     }
   }
   spec {
-    type = "LoadBalancer"
+    type                        = "LoadBalancer"
     publish_not_ready_addresses = true
     load_balancer_source_ranges = ["10.0.0.0/8"]
     selector = {

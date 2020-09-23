@@ -1,4 +1,5 @@
 resource "kubernetes_validating_webhook_configuration" "opa_validating_webhook" {
+  depends_on = [kubernetes_certificate_signing_request.opa_server_signed_cert]
   metadata {
     name = "opa-validating-webhook"
     labels = merge({
@@ -30,7 +31,7 @@ resource "kubernetes_validating_webhook_configuration" "opa_validating_webhook" 
       service {
         name      = kubernetes_service.opa.metadata.0.name
         namespace = kubernetes_namespace.opa_namespace.metadata.0.name
-
+        port      = 443
       }
     }
   }
