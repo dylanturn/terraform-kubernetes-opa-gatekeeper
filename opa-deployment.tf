@@ -83,7 +83,7 @@ resource "kubernetes_deployment" "opa" {
           name = "opa-server"
           secret {
             secret_name = kubernetes_secret.opa_server_cert.metadata.0.name
-            optional = false
+            optional    = false
           }
         }
       }
