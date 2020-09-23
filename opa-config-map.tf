@@ -3,7 +3,7 @@ resource "kubernetes_config_map" "opa_default_system_main" {
     name      = "opa-default-system-main"
     namespace = kubernetes_namespace.opa_namespace.metadata.0.name
     annotations = {
-      "openpolicyagent.org/policy-status" : {}
+      "openpolicyagent.org/policy-status" : "{}"
     }
     labels = merge({
       # Other labels go here
