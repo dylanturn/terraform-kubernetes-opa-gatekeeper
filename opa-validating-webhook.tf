@@ -3,13 +3,11 @@ resource "kubernetes_validating_webhook_configuration" "opa_validating_webhook" 
   metadata {
     name = "opa-validating-webhook"
     labels = merge({
-
     }, local.resource_labels)
   }
-
   webhook {
     name                      = "validating-webhook.openpolicyagent.org"
-    admission_review_versions = ["v1", "v1beta1"]
+    admission_review_versions = ["v1"]
     side_effects              = "None"
     namespace_selector {
       match_expressions {
