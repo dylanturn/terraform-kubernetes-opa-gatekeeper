@@ -9,4 +9,9 @@ resource "kubernetes_config_map" "opa_default_system_main" {
   data = {
     "main" : templatefile("${path.module}/templates/opa-default-system-main.tmpl", {})
   }
+  lifecycle {
+    ignore_changes = [
+      "metadata.annotations"
+    ]
+  }
 }
